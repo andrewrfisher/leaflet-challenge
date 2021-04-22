@@ -69,10 +69,41 @@ d3.json(earthquakesUrl, function(quakeData) {
         if (mag === 0) {
             return 1;
         }
-        else (return mag * 3)
+        return mag * 3;
         }
+        //stylize marker
+        function styleMark(feature){
+            return{
+                opacity: 1,
+                fillOpacity: 1,
+                //color based on mag...
+                fillColor: chooseColor(feature.properties.mag),
+                color: "#000000",
+                //radius based on mag
+                radius: markerSize(feature.properties.mag),
+                stroke: true,
+                weight: 0.5
+            };
 
-    //CONTINUE HERE!
+
+        }
+        function chooseColor(magnitude){
+            switch(true){
+                case magnitude > 5:
+                    return "#581845";
+                case magnitude > 4:
+                    return "#900C3F";
+                case magnitude > 3:
+                    return "#C70039";
+                case magnitude > 2:
+                    return "#FF5733";
+                case magnitude > 1:
+                    return "#FFC300";
+                default:
+                    return "#DAF7A6";
+                }
+        }
+    
     });
 
 
