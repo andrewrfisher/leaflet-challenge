@@ -103,7 +103,25 @@ d3.json(earthquakesUrl, function(quakeData) {
                     return "#DAF7A6";
                 }
         }
-    
+        
+        //geojson layer that contains the features array on quakedata object
+        L.geoJSON(quakeData, {
+            pointToLayer: function(feature, latlng){
+                return L.circleMarker(latlng);
+            },
+            style: styleMark,
+            //giving each element/feature a popup with place and time of quake
+            onEachFeature: function(feature, layer) {
+                layer.bindPopup("<h4>Location: " + feature.properties.place + 
+                "</h4><hr><p>Date & Time: " + new Date(feature.properties.time) + 
+                "</p><hr><p>Magnitude: " + feature.properties.mag + "</p>");
+            }
+        //add the data above to earthquakes layer
+        }).addTo(earthquakes);
+        //now add it to mymap
+        earthquakes.addTo(myMap);
+
+        
     });
 
 
